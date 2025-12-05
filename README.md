@@ -2,6 +2,24 @@
 
 This repository contains a fullstack Tic Tac Toe project with a React + TypeScript frontend and a Python FastAPI backend.
 
+
+- Instructions for running the app: 
+
+See below
+
+- A brief description of your approach: 
+
+I stood up a full-stack tic-tac-toe app with a React frontend, python backend, and SQLite database. The database is the source of truth for the game. 
+
+- What AI tools you used and how: 
+
+I used Github Copilot Chat (Agent mode! this is my first time using this). I prompted the tool to help me write boilerplate code, then troubleshoot when I ran into issue. 
+
+- Anything that didn’t go as planned or you'd improve with more time
+
+I ran into problems with tailwind styling, mainly getting colors to render, as well as layout. I'm fairly satisfied with the game, so styling and layout would be my next concern. Then, more features!
+
+
 ## Project Structure
 - `src/frontend/` — Vite React + TypeScript app with Tailwind CSS and Redux Toolkit.
 - `src/backend/` — FastAPI app using SQLModel and SQLite.
