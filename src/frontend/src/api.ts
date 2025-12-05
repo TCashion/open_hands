@@ -14,7 +14,7 @@ export async function postMove(gameId: string, idx: number) {
   const res = await fetch(`${BASE}/games/${gameId}/moves`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(idx),
+    body: JSON.stringify({ idx }),
   })
   return res.json()
 }

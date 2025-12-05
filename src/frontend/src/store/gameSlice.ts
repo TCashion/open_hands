@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createGame, getGame, postMove } from '../api'
 
 export type Player = 'X' | 'O'
 
@@ -19,24 +20,17 @@ const initialState: GameState = {
 }
 
 export const newGame = createAsyncThunk('game/newGame', async () => {
-  const res = await fetch('http://localhost:8000/games', { method: 'POST' })
-  const data = await res.json()
+  const data = await createGame()
   return data.game_id
 })
 
 export const fetchGame = createAsyncThunk('game/fetchGame', async (game_id: string) => {
-  const res = await fetch(`http://localhost:8000/games/${game_id}`)
-  const data = await res.json()
+  const data = await getGame(game_id)
   return data
 })
 
 export const makeMove = createAsyncThunk('game/makeMove', async ({ game_id, idx }: { game_id: string, idx: number }) => {
-  const res = await fetch(`http://localhost:8000/games/${game_id}/moves`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ idx })
-  })
-  const data = await res.json()
+  const data = await postMove(game_id, idx)
   return data
 })
 
@@ -57,13 +51,13 @@ const slice = createSlice({
       .addCase(fetchGame.fulfilled, (state, action) => {
         state.status = 'idle'
         state.game_id = action.payload.game_id
-        state.board = action.payload.board.map((x: string) => x === ' ' ? null : x)
+        state.board = action.payload.board.map((x: string) => (x === ' ' ? null : x))
         state.turn = action.payload.turn
         state.winner = action.payload.winner
       })
       .addCase(makeMove.fulfilled, (state, action) => {
         state.status = 'idle'
-        state.board = action.payload.board.map((x: string) => x === ' ' ? null : x)
+        state.board = action.payload.board.map((x: string) => (x === ' ' ? null : x))
         state.turn = action.payload.turn
         state.winner = action.payload.winner
       })
