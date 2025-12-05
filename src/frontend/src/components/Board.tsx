@@ -3,14 +3,37 @@ import Square from './Square'
 import { useAppSelector, useAppDispatch } from '../store'
 import { selectGame, newGame, fetchGame, makeMove } from '../store/gameSlice'
 
+function getGameIdFromPath() {
+  const match = window.location.pathname.match(/([a-f0-9\-]{36})/)
+  return match ? match[1] : null
+}
+
 export default function Board() {
   const dispatch = useAppDispatch()
   const game = useAppSelector(selectGame)
 
   useEffect(() => {
-    dispatch(newGame()).then((action: any) => {
-      if (action.payload) dispatch(fetchGame(action.payload))
-    })
+    const id = getGameIdFromPath()
+    if (id) {
+      dispatch(fetchGame(id)).then((action: any) => {
+        if (action.error) {
+          // If not found, start a new game
+          dispatch(newGame()).then((newAction: any) => {
+            if (newAction.payload) {
+              window.history.replaceState({}, '', `/${newAction.payload}`)
+              dispatch(fetchGame(newAction.payload))
+            }
+          })
+        }
+      })
+    } else {
+      dispatch(newGame()).then((action: any) => {
+        if (action.payload) {
+          window.history.replaceState({}, '', `/${action.payload}`)
+          dispatch(fetchGame(action.payload))
+        }
+      })
+    }
   }, [dispatch])
 
   function handleClick(index: number) {
@@ -23,7 +46,10 @@ export default function Board() {
 
   function handleNewGame() {
     dispatch(newGame()).then((action: any) => {
-      if (action.payload) dispatch(fetchGame(action.payload))
+      if (action.payload) {
+        window.history.replaceState({}, '', `/${action.payload}`)
+        dispatch(fetchGame(action.payload))
+      }
     })
   }
 

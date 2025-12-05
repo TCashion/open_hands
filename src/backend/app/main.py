@@ -53,7 +53,7 @@ def get_game(gid: str):
 
 from sqlmodel import select
 
-def check_winner(board: List[Optional[str]]):
+def check_winner(board: List[Optional[str]]) -> str | None:
     lines = [
         (0,1,2),(3,4,5),(6,7,8),
         (0,3,6),(1,4,7),(2,5,8),
@@ -61,7 +61,7 @@ def check_winner(board: List[Optional[str]]):
     ]
     for a,b,c in lines:
         if board[a] and board[a] == board[b] and board[a] == board[c]:
-            return board[a]
+            return board[a] if board[a] is not " " else None
     if all(x for x in board):
         return 'draw'
     return None
