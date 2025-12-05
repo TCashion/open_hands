@@ -1,24 +1,18 @@
-# Open hands technical project
+# Open Hands Technical Project
 
-This repository contains a fullstack Tic Tac Toe project with a React + TypeScript frontend and a Python FastAPI backend.
+Welcome to the fullstack Tic Tac Toe app! This project features a modern React + TypeScript frontend and a Python FastAPI backend, with SQLite keeping score as the database of record.
 
+## How to Run the App
+Check out the setup instructions below to get both the frontend and backend running locally. It’s quick and easy—just follow the steps!
 
-- Instructions for running the app: 
+## Approach & Architecture
+I built a full-stack Tic Tac Toe game using React for the user interface, FastAPI for the backend logic, and SQLite as the persistent game state. The backend acts as the single source of truth, ensuring every move is tracked and validated.
 
-See below
+## AI Tools Used
+I leveraged GitHub Copilot Chat (my first time using Agent Mode!) to accelerate development. Copilot helped generate boilerplate code, debug issues, and streamline the build process.
 
-- A brief description of your approach: 
-
-I stood up a full-stack tic-tac-toe app with a React frontend, python backend, and SQLite database. The database is the source of truth for the game. 
-
-- What AI tools you used and how: 
-
-I used Github Copilot Chat (Agent mode! this is my first time using this). I prompted the tool to help me write boilerplate code, then troubleshoot when I ran into issue. 
-
-- Anything that didn’t go as planned or you'd improve with more time
-
-I ran into problems with tailwind styling, mainly getting colors to render, as well as layout. I'm fairly satisfied with the game, so styling and layout would be my next concern. Then, more features!
-
+## Challenges & Future Improvements
+Tailwind CSS gave me issues with color rendering. While the game is fully functional, I’d love to polish the styling and layout next. After that, I’d want to build out new features and enhancements!
 
 ## Project Structure
 - `src/frontend/` — Vite React + TypeScript app with Tailwind CSS and Redux Toolkit.
