@@ -56,7 +56,7 @@ export default function Board() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="mb-4">
         {[0, 1, 2].map(row => (
-          <div key={row} className="flex justify-center">
+          <div key={row} className="flex flex-row justify-center">
             {[0, 1, 2].map(col => {
               const i = row * 3 + col
               return (
@@ -71,7 +71,14 @@ export default function Board() {
           <span className="font-semibold">Status: </span>
           {game.status === 'loading' ? 'Loading...' : game.winner ? (game.winner === 'draw' ? 'Draw' : `Winner: ${game.winner}`) : `Next: ${game.turn}`}
         </div>
-        <button className="px-3 py-1 bg-blue-600 text-white rounded" style={{ marginTop: 10, marginBottom: 10 }} onClick={handleNewGame} disabled={game.status === 'loading'}>New Game</button>
+        <button
+          className="px-3 py-1 bg-blue-600 text-white rounded"
+          style={{ marginTop: 10, marginBottom: 10 }}
+          onClick={handleNewGame}
+          disabled={game.status === 'loading'}
+        >
+          New Game
+        </button>
       </div>
     </div>
   )
