@@ -3,9 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel, Session, create_engine, Field
 from typing import Optional, List
 import uuid
+from datetime import datetime
+from pydantic import BaseModel
 
 DATABASE_URL = "sqlite:///./database.db"
 engine = create_engine(DATABASE_URL, echo=False)
+
+class Move(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    game_id: str
+    player: str
+    index: int
+    created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class Game(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -13,6 +22,7 @@ class Game(SQLModel, table=True):
     board: str  # store as 9-char string, e.g. "XOX   O X"
     turn: str
     winner: Optional[str] = None
+    finished_at: Optional[datetime] = None
 
 app = FastAPI()
 app.add_middleware(
@@ -65,8 +75,12 @@ def check_winner(board: List[Optional[str]]):
         return 'draw'
     return None
 
+class MoveRequest(BaseModel):
+    idx: int
+
 @app.post("/games/{gid}/moves")
-def make_move(gid: str, idx: int):
+def make_move(gid: str, move: MoveRequest):
+    idx = move.idx
     with Session(engine) as session:
         game = session.exec(select(Game).where(Game.game_id == gid)).first()
         if not game:
@@ -79,8 +93,13 @@ def make_move(gid: str, idx: int):
         if game.winner:
             raise HTTPException(status_code=400, detail="Game already finished")
         board[idx] = game.turn
+        # Log the move
+        move_db = Move(game_id=game.game_id, player=game.turn, index=idx)
+        session.add(move_db)
         game.turn = 'O' if game.turn == 'X' else 'X'
         game.winner = check_winner(board)
+        if game.winner:
+            game.finished_at = datetime.utcnow()
         game.board = ''.join(board)
         session.add(game)
         session.commit()

@@ -16,8 +16,8 @@ Quick start:
 2. Backend
    - cd backend
    - python3 -m venv .venv
+   - source .venv/bin/activate
    - .venv/bin/pip install -r requirements.txt
-   - pip install uvicorn
    - uvicorn app.main:app --reload --port 8000
 
 Both servers will run locally; frontend expects backend at http://localhost:8000.
