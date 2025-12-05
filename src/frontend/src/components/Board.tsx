@@ -53,7 +53,7 @@ export default function Board() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center">
       <div className="mb-4">
         {[0, 1, 2].map(row => (
           <div key={row} className="flex flex-row justify-center">
