@@ -3,8 +3,8 @@
 This repository contains a fullstack Tic Tac Toe project with a React + TypeScript frontend and a Python FastAPI backend.
 
 ## Project Structure
-- `frontend/` — Vite React + TypeScript app with Tailwind CSS and Redux Toolkit.
-- `backend/` — FastAPI app using SQLModel and SQLite.
+- `src/frontend/` — Vite React + TypeScript app with Tailwind CSS and Redux Toolkit.
+- `src/backend/` — FastAPI app using SQLModel and SQLite.
 
 ---
 
@@ -14,7 +14,7 @@ Run frontend and backend in their own terminal sessions.
 
 ### Backend (FastAPI + SQLModel + SQLite)
 
-1. cd backend
+1. cd src/backend
 2. python -m venv .venv
 3. source .venv/bin/activate
 4. .venv/bin/pip install -r requirements.txt
@@ -33,7 +33,7 @@ From the `/backend` directory, you can access the database with `sqlite3 databas
 
 ### Frontend (Vite + React + TypeScript)
 
-1. cd frontend
+1. cd src/frontend
 2. npm install
 3. npm run dev
 
