@@ -17,7 +17,6 @@ export default function Board() {
     if (id) {
       dispatch(fetchGame(id)).then((action: any) => {
         if (action.error) {
-          // If not found, start a new game
           dispatch(newGame()).then((newAction: any) => {
             if (newAction.payload) {
               window.history.replaceState({}, '', `/${newAction.payload}`)
@@ -54,10 +53,10 @@ export default function Board() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="mb-4">
         {[0, 1, 2].map(row => (
-          <div key={row} className="flex gap-2 mb-2">
+          <div key={row} className="flex justify-center">
             {[0, 1, 2].map(col => {
               const i = row * 3 + col
               return (
@@ -67,9 +66,12 @@ export default function Board() {
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-between">
-        <div>{game.status === 'loading' ? 'Loading...' : game.winner ? (game.winner === 'draw' ? 'Draw' : `Winner: ${game.winner}`) : `Next: ${game.turn}`}</div>
-        <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={handleNewGame} disabled={game.status === 'loading'}>New Game</button>
+      <div className="my-2">
+        <div className="mb-2" style={{ margin: 10 }}>
+          <span className="font-semibold">Status: </span>
+          {game.status === 'loading' ? 'Loading...' : game.winner ? (game.winner === 'draw' ? 'Draw' : `Winner: ${game.winner}`) : `Next: ${game.turn}`}
+        </div>
+        <button className="px-3 py-1 bg-blue-600 text-white rounded" style={{ marginTop: 10, marginBottom: 10 }} onClick={handleNewGame} disabled={game.status === 'loading'}>New Game</button>
       </div>
     </div>
   )
