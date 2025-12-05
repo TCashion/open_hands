@@ -60,9 +60,9 @@ def check_winner(board: List[Optional[str]]) -> str | None:
         (0,4,8),(2,4,6),
     ]
     for a,b,c in lines:
-        if board[a] and board[a] == board[b] and board[a] == board[c]:
-            return board[a] if board[a] is not " " else None
-    if all(x for x in board):
+        if board[a] and board[a] == board[b] and board[a] == board[c] and board[a] != ' ':
+            return board[a]
+    if all(x != ' ' for x in board):
         return 'draw'
     return None
 
